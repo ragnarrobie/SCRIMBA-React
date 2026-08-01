@@ -7,15 +7,19 @@ import data from "./data.js";
 function App() {
   const entire = data.map((file) => {
     return (
-      <Header
-        id={file.id}
-        img1={file.img1}
+      <Header 
+      key = {file.id}
+      {...file}
+      
+       /* img1={file.img1}
         img2={file.img2}
         name={file.name}
         name2={file.name}
         date={file.date}
         googleMapsLink={file.googleMapsLink}
         Note={file.Note}
+    */
+         
       />
     );
   });
