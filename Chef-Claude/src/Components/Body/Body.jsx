@@ -5,16 +5,30 @@ const Body = () => {
   function handle(formData) {
     const forms = formData.get("email");
     const froms = formData.get("password");
+    const fromss = formData.get("description");
+    const fromsss = formData.get("employymentStatus");
     setState((prev) => {
-      return [...prev, { email: forms, password: froms }];
+      return [
+        ...prev,
+        {
+          email: forms,
+          password: froms,
+          description: fromss,
+          employmentStatus: fromsss,
+        },
+      ];
     });
   }
-  const list = state.map((bluh) => {
-    return <li key={bluh}>{bluh}</li>;
+  const list = state.map((bluh, index) => {
+    return (
+      <li key={index}>
+        {bluh.email}- {bluh.password}{" "}
+      </li>
+    );
   });
   return (
     <div>
-      <form>
+      <form action={handle}>
         <label htmlFor="email">
           {" "}
           email
@@ -39,25 +53,30 @@ const Body = () => {
           <textarea
             name="description"
             id="description"
-            type="description"
             defaultValue="This is a description"
           ></textarea>
         </label>
         <fieldset>
           <legend>Employment Status</legend>
           <label>
-            <input name="employymentStatus" value="unemployed" type="radio" defaultChecked={true} />
+            <input
+              name="employymentStatus"
+              value="unemployed"
+              type="radio"
+              defaultChecked={true}
+            />
             Unemployed
           </label>
           <label>
-            <input name="employymentStatus" value="unemployed" type="radio" />
+            <input name="employymentStatus" value="employed" type="radio" />
             employed
           </label>
           <label>
-            <input name="employymentStatus" value="unemployed" type="radio" />
+            <input name="employymentStatus" value="Student" type="radio" />
             Student
           </label>
         </fieldset>
+        <button type="submit">submit</button>
       </form>
 
       {list}
