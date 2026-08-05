@@ -8,9 +8,9 @@ const Header = () => {
   ]);
 
   function submit(formData) {
-    const formDatas =  formData.get("ingredient");
+    const formDatas = formData.get("ingredient");
     setIngredients((newIngri) => {
-      return [...newIngri, formDatas ];
+      return [...newIngri, formDatas];
     });
   }
   const list = ingredients.map((ingredient) => {
@@ -23,10 +23,7 @@ const Header = () => {
 
   return (
     <div className="my-12">
-      <form
-        action={submit}
-        className="flex items-center justify-center gap-3"
-      >
+      <form action={submit} className="flex items-center justify-center gap-3">
         <input
           type="text"
           placeholder="e.g Milk"
@@ -43,8 +40,20 @@ const Header = () => {
           + Add ingredient
         </button>
       </form>
+      <section>
+        <h2>Ingredients on hand:</h2>
+        <ul className="list-disc w-96 mx-auto mt-8 pl-6">{list}</ul>
+        <div className="">
+            <div>
+              <h3>
+                Ready for a recipe?
+              </h3>
+              <p> generate a recipe from your list of ingredients.</p>
+            </div>
+            <button>Get a recipe</button>
 
-      <ul className="list-disc w-96 mx-auto mt-8 pl-6">{list}</ul>
+        </div>
+      </section>
     </div>
   );
 };
