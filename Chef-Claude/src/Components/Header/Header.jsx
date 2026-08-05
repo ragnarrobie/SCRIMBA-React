@@ -9,51 +9,68 @@ const Header = () => {
 
   function submit(formData) {
     const formDatas = formData.get("ingredient");
+
     setIngredients((newIngri) => {
       return [...newIngri, formDatas];
     });
   }
+
   const list = ingredients.map((ingredient) => {
     return (
-      <li className="text-gray-400" key={ingredient}>
+      <li className="py-1 text-gray-700" key={ingredient}>
         {ingredient}
       </li>
     );
   });
 
   return (
-    <div className="my-12">
-      <form action={submit} className="flex items-center justify-center gap-3">
-        <input
-          type="text"
-          placeholder="e.g Milk"
-          className="w-96 h-12 px-4 border border-gray-300 rounded-lg"
-          name="ingredient"
-        />
-
-        <button
-          type="submit"
-          className="h-12 w-40 flex items-center justify-center
-                     bg-black text-white font-semibold rounded-lg
-                     hover:bg-gray-500 cursor-pointer"
+    <div className="min-h-screen bg-gray-100 px-4 py-12">
+      <div className="mx-auto max-w-2xl">
+        <form
+          action={submit}
+          className="flex items-center justify-center gap-3"
         >
-          + Add ingredient
-        </button>
-      </form>
-      <section>
-        <h2>Ingredients on hand:</h2>
-        <ul className="list-disc w-96 mx-auto mt-8 pl-6">{list}</ul>
-        <div className="">
+          <input
+            type="text"
+            placeholder="e.g Milk"
+            className="h-12 w-96 rounded-lg border border-gray-300 bg-white px-4 text-gray-700 shadow-sm outline-none transition focus:border-black focus:ring-1 focus:ring-black"
+            name="ingredient"
+          />
+
+          <button
+            type="submit"
+            className="flex h-12 w-40 cursor-pointer items-center justify-center rounded-lg bg-black font-semibold text-white transition hover:bg-gray-700"
+          >
+            + Add ingredient
+          </button>
+        </form>
+
+        <section className="mt-12 rounded-xl bg-white p-8 shadow-md">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Ingredients on hand:
+          </h2>
+
+          <ul className="mt-6 list-disc space-y-2 pl-6">{list}</ul>
+          <div className="mt-10 flex items-center justify-between gap-6 rounded-lg bg-gray-100 p-6">
             <div>
-              <h3>
+              <h3 className="text-lg font-bold text-gray-900">
                 Ready for a recipe?
               </h3>
-              <p> generate a recipe from your list of ingredients.</p>
-            </div>
-            <button>Get a recipe</button>
 
-        </div>
-      </section>
+              <p className="mt-1 text-sm text-gray-500">
+                Generate a recipe from your list of ingredients.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className="shrink-0 cursor-pointer rounded-lg bg-orange-500 px-5 py-3 font-semibold text-white transition hover:bg-orange-600"
+            >
+              Get a recipe
+            </button>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };
