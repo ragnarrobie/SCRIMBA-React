@@ -48,7 +48,7 @@ const Header = () => {
             </h2>
 
             <ul className="mt-6 list-disc space-y-2 pl-6">{list}</ul>
-            <div className="mt-10 flex items-center justify-between gap-6 rounded-lg bg-gray-100 p-6">
+            {ingredients.length > 3 ? <div className="mt-10 flex items-center justify-between gap-6 rounded-lg bg-gray-100 p-6">
               <div>
                 <h3 className="text-lg font-bold text-gray-900">
                   Ready for a recipe?
@@ -66,7 +66,7 @@ const Header = () => {
               >
                 Get a recipe
               </button>
-            </div>
+            </div> : null}
           </section>
         ) : null}
       </div>
