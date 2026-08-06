@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 
 const Header = () => {
-  const [ingredients, setIngredients] = useState([
-    "all the main spices",
+  const [ingredients, setIngredients] = useState([ "all the main spices",
     "pasta",
     "ground beef",
-    "tomato paste",
-  ]);
+    "tomato paste",]);
   const [recipe, setRecipe] = useState(false);
 
   function submit(formData) {
