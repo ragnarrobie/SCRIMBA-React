@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Footer from "../Footer/Recipe";
 import Ingredients from "../ingredients/Ingredients";
 const Header = () => {
+  const apikey = import.meta.env.VITE_MY_FIRST_API_KEY
   const [ingredients, setIngredients] = useState([
     "all the main spices",
     "pasta",
@@ -58,23 +59,4 @@ const Header = () => {
 };
 
 export default Header;
-/**
- app
 
-{products.map(product)=>(
-  <card key={product.title} product = {product} /> 
-  )}
-
-import {Fragment} from "react"
-card
-{
-product.career.map((spec,index)=>{
-  < Fragment key={index}>
-  <hr />
-  {spec} </Fragment>
-
-  })
-}
-
-
- */
