@@ -1,85 +1,135 @@
+/*
 import React, { useState } from "react";
+import { getRecipeFromMistral } from "../../ai";
+import Recipee from "../Recipe1/Recipee";
+import Ingre from "../ingre/ingre";
 
 const Body = () => {
-  const [state, setState] = useState([]);
-  function handle(formData) {
-    const forms = formData.get("email");
-    const froms = formData.get("password");
-    const fromss = formData.get("description");
-    const fromsss = formData.get("employymentStatus");
-    setState((prev) => {
-      return [
-        ...prev,
-        {
-          email: forms,
-          password: froms,
-          description: fromss,
-          employmentStatus: fromsss,
-        },
-      ];
+  const [ingredients, setIngredients] = useState([]);
+  const [recipe, setRecipe] = useState("");
+
+  function from(formData) {
+    const froms = formData.get("ingredient");
+
+    setIngredients((prevs) => {
+      return [...prevs, froms];
     });
   }
-  const list = state.map((bluh, index) => {
+
+  function deleteIngredient(indexToDelete) {
+    setIngredients((prev) =>
+      prev.filter((_, index) => index !== indexToDelete),
+    );
+  }
+
+  const list = ingredients.map((showIngredient, index) => {
     return (
-      <li key={index}>
-        {bluh.email}- {bluh.password}{" "}
+      <li
+        key={index}
+        className="flex items-center justify-between text-gray-700"
+      >
+        <span>{showIngredient}</span>
+        <button
+          type="button"
+          onClick={() => deleteIngredient(index)}
+          className="ml-3 text-sm text-red-500 hover:text-red-700 cursor-pointer"
+        >
+          Delete
+        </button>
       </li>
     );
   });
+
+  async function getRecipe() {
+    const rec = await getRecipeFromMistral(ingredients);
+    setRecipe(rec);
+  }
+
   return (
-    <div>
-      <form action={handle}>
-        <label htmlFor="email">
-          {" "}
-          email
-          <input
-            name="email"
-            id="email"
-            type="email"
-            defaultValue="ragnar@gmail.com"
-          />
-        </label>
-        <label htmlFor="password">
-          password
-          <input
-            name="password"
-            id="password"
-            type="password"
-            defaultValue="ragnar"
-          />
-        </label>
-        <label htmlFor="description">
-          Description
-          <textarea
-            name="description"
-            id="description"
-            defaultValue="This is a description"
-          ></textarea>
-        </label>
-        <fieldset>
-          <legend>Employment Status</legend>
-          <label>
-            <input
-              name="employymentStatus"
-              value="unemployed"
-              type="radio"
-              defaultChecked={true}
-            />
-            Unemployed
-          </label>
-          <label>
-            <input name="employymentStatus" value="employed" type="radio" />
-            employed
-          </label>
-          <label>
-            <input name="employymentStatus" value="Student" type="radio" />
-            Student
-          </label>
-        </fieldset>
-        <button type="submit">submit</button>
+    <div className="mx-auto w-full max-w-3xl px-6 py-10">
+      
+      <form action={from} className="flex w-full items-center gap-3">
+        <input
+          type="text"
+          name="ingredient"
+          placeholder="e.g. chicken"
+          className="h-12 flex-1 rounded-lg border border-gray-300 px-4 text-gray-700 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+        />
+
+        <button
+          type="submit"
+          className="h-12 w-40 shrink-0 cursor-pointer rounded-lg bg-black font-semibold text-white transition hover:bg-gray-700"
+        >
+          + Add ingredient
+        </button>
       </form>
 
-      {list}
+      
+      <Ingre ingredients={ingredients} list={list} setIngredients={setIngredients} />
+
+    
+      <Recipee
+        ingredients={ingredients}
+        getRecipe={getRecipe}
+        recipe={recipe}
+      />
+    </div>
+  );
+};
+
+export default Body;
+
+*/
+import React, { useState } from "react";
+import { getRecipeFromMistral } from "../../ai";
+import Recipee from "../Recipe1/Recipee";
+import Ingre from "../ingre/ingre";
+
+const Body = () => {
+  const [ingredients, setIngredients] = useState([]);
+  const [recipe, setRecipe] = useState("");
+
+  function from(formData) {
+    const froms = formData.get("ingredient");
+    if (!froms || froms.trim() === "") {
+      return;
+    }
+
+    setIngredients((prevs) => {
+      return [...prevs, froms];
+    });
+  }
+
+  async function getRecipe() {
+    const rec = await getRecipeFromMistral(ingredients);
+    setRecipe(rec);
+  }
+
+  return (
+    <div className="mx-auto w-full max-w-3xl px-6 py-10">
+      <form action={from} className="flex w-full items-center gap-3">
+        <input
+          type="text"
+          name="ingredient"
+          placeholder="e.g. chicken"
+          className="h-12 flex-1 rounded-lg border border-gray-300 px-4 text-gray-700 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+        />
+
+        <button
+          type="submit"
+          className="h-12 w-40 shrink-0 cursor-pointer rounded-lg bg-black font-semibold text-white transition hover:bg-gray-700"
+        >
+          + Add ingredient
+        </button>
+      </form>
+
+      <Ingre ingredients={ingredients} setIngredients={setIngredients} />
+
+      <Recipee
+        ingredients={ingredients}
+        getRecipe={getRecipe}
+        recipe={recipe}
+      />
     </div>
   );
 };
