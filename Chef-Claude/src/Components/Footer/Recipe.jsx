@@ -1,69 +1,64 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 
-const Footer = () => {
+const Recipe = (props) => {
   return (
-    <div>
-      <section>
-        <h2>Chef Claude Recommends:</h2>
-        <article className="suggested-recipe-container" aria-live="polite">
-          <p>
-            Based on the ingredients you have available, I would recommend
-            making a simple a delicious <strong>Beef Bolognese Pasta</strong>.
-            Here is the recipe:
-          </p>
-          <h3>Beef Bolognese Pasta</h3>
-          <strong>Ingredients:</strong>
-          <ul>
-            <li>1 lb. ground beef</li>
-            <li>1 onion, diced</li>
-            <li>3 cloves garlic, minced</li>
-            <li>2 tablespoons tomato paste</li>
-            <li>1 (28 oz) can crushed tomatoes</li>
-            <li>1 cup beef broth</li>
-            <li>1 teaspoon dried oregano</li>
-            <li>1 teaspoon dried basil</li>
-            <li>Salt and pepper to taste</li>
-            <li>
-              8 oz pasta of your choice (e.g., spaghetti, penne, or linguine)
-            </li>
-          </ul>
-          <strong>Instructions:</strong>
-          <ol>
-            <li>Bring a large pot of salted water to a boil for the pasta.</li>
-            <li>
-              In a large skillet or Dutch oven, cook the ground beef over
-              medium-high heat, breaking it up with a wooden spoon, until
-              browned and cooked through, about 5-7 minutes.
-            </li>
-            <li>
-              Add the diced onion and minced garlic to the skillet and cook for
-              2-3 minutes, until the onion is translucent.
-            </li>
-            <li>Stir in the tomato paste and cook for 1 minute.</li>
-            <li>
-              Add the crushed tomatoes, beef broth, oregano, and basil. Season
-              with salt and pepper to taste.
-            </li>
-            <li>
-              Reduce the heat to low and let the sauce simmer for 15-20 minutes,
-              stirring occasionally, to allow the flavors to meld.
-            </li>
-            <li>
-              While the sauce is simmering, cook the pasta according to the
-              package instructions. Drain the pasta and return it to the pot.
-            </li>
-            <li>
-              Add the Bolognese sauce to the cooked pasta and toss to combine.
-            </li>
-            <li>
-              Serve hot, garnished with additional fresh basil or grated
-              Parmesan cheese if desired.
-            </li>
-          </ol>
-        </article>
-      </section>
-    </div>
+    <section className="mt-10 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="mb-6 border-b border-gray-200 pb-4">
+        <h2 className="text-2xl font-bold text-gray-900">Your Recipe</h2>
+
+        <p className="mt-1 text-sm text-gray-500">
+          A recipe generated from your ingredients.
+        </p>
+      </div>
+
+      <ReactMarkdown
+        components={{
+          h1: ({ children }) => (
+            <h1 className="mb-6 text-3xl font-bold text-gray-900">
+              {children}
+            </h1>
+          ),
+
+          h2: ({ children }) => (
+            <h2 className="mb-4 mt-8 text-2xl font-bold text-gray-900">
+              {children}
+            </h2>
+          ),
+
+          h3: ({ children }) => (
+            <h3 className="mb-3 mt-6 text-xl font-bold text-gray-900">
+              {children}
+            </h3>
+          ),
+
+          p: ({ children }) => (
+            <p className="mb-4 leading-7 text-gray-600">{children}</p>
+          ),
+
+          ul: ({ children }) => (
+            <ul className="mb-6 list-disc space-y-2 pl-6 text-gray-600">
+              {children}
+            </ul>
+          ),
+
+          ol: ({ children }) => (
+            <ol className="mb-6 list-decimal space-y-3 pl-6 text-gray-600">
+              {children}
+            </ol>
+          ),
+
+          li: ({ children }) => <li className="leading-7">{children}</li>,
+
+          strong: ({ children }) => (
+            <strong className="font-bold text-gray-900">{children}</strong>
+          ),
+        }}
+      >
+        {props.recipe}
+      </ReactMarkdown>
+    </section>
   );
 };
 
-export default Footer;
+export default Recipe;

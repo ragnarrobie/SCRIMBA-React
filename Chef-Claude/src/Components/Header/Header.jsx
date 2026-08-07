@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import Footer from "../Footer/Recipe";
+import Recipe from "../Footer/Recipe";
 import Ingredients from "../ingredients/Ingredients";
+import { getRecipeFromMistral } from "../../ai.js";
 const Header = () => {
-  const apikey = import.meta.env.VITE_MY_FIRST_API_KEY
-  const [ingredients, setIngredients] = useState([
-    "all the main spices",
-    "pasta",
-    "ground beef",
-    "tomato paste",
-  ]);
-  const [recipe, setRecipe] = useState(false);
+  const [ingredients, setIngredients] = useState([]);
+  const [recipe, setRecipe] = useState("");
 
   function submit(formData) {
     const formDatas = formData.get("ingredient");
@@ -18,8 +13,9 @@ const Header = () => {
       return [...newIngri, formDatas];
     });
   }
-  function turn() {
-    setRecipe((pre) => !pre);
+  async function turn() {
+    const getRecipe = await getRecipeFromMistral(ingredients);
+    setRecipe(getRecipe);
   }
   const list = ingredients.map((ingredient) => {
     return (
@@ -52,11 +48,10 @@ const Header = () => {
         </form>
         <Ingredients ingredients={ingredients} turn={turn} list={list} />
 
-        {recipe && <Footer />}
+        {recipe && <Recipe recipe={recipe} />}
       </div>
     </div>
   );
 };
 
 export default Header;
-
