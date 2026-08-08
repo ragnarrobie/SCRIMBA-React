@@ -1,13 +1,13 @@
-import React from "react";
+import React,{forwardRef} from "react";
 import ReactMarkDown from "react-markdown";
 
-const Recipee = (props) => {
+const Recipee = forwardRef((props,ref) => {
   return (
     <div>
       <section>
         {props.ingredients.length > 3 ? (
           <section className="mt-10 flex items-center justify-between gap-6 rounded-xl bg-gray-100 p-6">
-            <div>
+            <div ref={ref}>
               <p className="text-lg font-bold text-gray-900">
                 Ready for a recipe?
               </p>
@@ -74,6 +74,6 @@ const Recipee = (props) => {
       </section>
     </div>
   );
-};
+});
 
 export default Recipee;

@@ -84,10 +84,13 @@ import React, { useState } from "react";
 import { getRecipeFromMistral } from "../../ai";
 import Recipee from "../Recipe1/Recipee";
 import Ingre from "../ingre/ingre";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 const Body = () => {
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
+  const recipeSection = useRef(null);
 
   function from(formData) {
     const froms = formData.get("ingredient");
@@ -104,7 +107,11 @@ const Body = () => {
     const rec = await getRecipeFromMistral(ingredients);
     setRecipe(rec);
   }
-
+  useEffect(() => {
+    if (recipe !== "" && recipeSection.current != null) {
+      return recipeSection.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [recipe]);
   return (
     <div className="mx-auto w-full max-w-3xl px-6 py-10">
       <form action={from} className="flex w-full items-center gap-3">
@@ -129,6 +136,7 @@ const Body = () => {
         ingredients={ingredients}
         getRecipe={getRecipe}
         recipe={recipe}
+        ref={recipeSection}
       />
     </div>
   );
