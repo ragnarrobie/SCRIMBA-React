@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 const Body = () => {
   const [state, setState] = useState({
@@ -6,10 +6,24 @@ const Body = () => {
     bottomText: "Walk into Mordor",
     imageUrl: "http://i.imgflip.com/1bij.jpg",
   });
+  const [meme, setMeme] = useState("");
   function from(event) {
-    const { value, name } = event.currentTarget;
+    const { name, value } = event.currentTarget;
     setState((prev) => {
       return { ...prev, [name]: value };
+    });
+  }
+  useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+      .then((res) => res.json())
+      .then((data) => setMeme(data.data.memes))
+      .catch((err) => console.error("failed to fetch!!!", err));
+  }, []);
+  function getImage() {
+    const booo = Math.floor(Math.random() * meme.length);
+    const url = meme[booo].url;
+    setState((prev) => {
+      return { ...prev, imageUrl: url };
     });
   }
 
@@ -40,7 +54,10 @@ const Body = () => {
           />
         </label>
 
-        <button className="mt-2 h-11 w-full cursor-pointer rounded-lg bg-black font-semibold text-white transition hover:bg-gray-700">
+        <button
+          onClick={getImage}
+          className="mt-2 h-11 w-full cursor-pointer rounded-lg bg-black font-semibold text-white transition hover:bg-gray-700"
+        >
           Get a new meme image 🖼
         </button>
       </div>

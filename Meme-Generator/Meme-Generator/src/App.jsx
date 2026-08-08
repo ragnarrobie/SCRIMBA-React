@@ -5,7 +5,8 @@ import Navbar from "./Components/Navbar/Navbar";
 const App = () => {
   return (
     <div>
-      <Navbar />
+      <Header />
+      <Body />
     </div>
   );
 };
