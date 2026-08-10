@@ -1,6 +1,7 @@
 import React from "react";
 import Die from "../Die/Die";
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
 export default function Header() {
   const num1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -9,7 +10,11 @@ export default function Header() {
   function Roll() {
     return num1.map(() => {
       const number = Math.floor(Math.random() * num2.length);
-      return num2[number];
+      return {
+        id: nanoid(),
+        isHeld: false,
+        value: num2[number],
+      };
     });
   }
 
@@ -18,6 +23,18 @@ export default function Header() {
   function rollDice() {
     setState(Roll());
   }
+  function hold(id) {
+    setState((prev)=>{
+        return prev.map((di)=>{
+            if(di.id===id){
+                return {...di,isHeld:!di.isHeld}
+            }
+            else{
+                return {...di}
+            }
+        })
+    })
+  }
 
   return (
     <main className="min-h-screen bg-[#092331] p-[18px]">
@@ -25,7 +42,15 @@ export default function Header() {
         <div className="flex flex-col items-center">
           <div className="grid grid-cols-5 gap-x-[18px] gap-y-[18px]">
             {state.map((roll, index) => {
-              return <Die key={index} value={roll} />;
+              return (
+                <Die
+                  hold={hold}
+                  key={roll.id}
+                  value={roll.value}
+                  isHeld={roll.isHeld}
+                  id = {roll.id}
+                />
+              );
             })}
           </div>
 
